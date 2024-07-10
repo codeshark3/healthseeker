@@ -8,6 +8,11 @@ import {
   serial,
   timestamp,
   varchar,
+  primaryKey,
+  text,
+  pgEnum,
+  date,
+
 } from "drizzle-orm/pg-core";
 
 /**
@@ -18,6 +23,8 @@ import {
  */
 export const createTable = pgTableCreator((name) => `healthseeker_${name}`);
 
+
+ export const roleEnums = pgEnum("role",['user','admin'])
 export const posts = createTable(
   "post",
   {
@@ -34,3 +41,14 @@ export const posts = createTable(
     nameIndex: index("name_idx").on(example.name),
   })
 );
+
+
+export const userTable = createTable("user",{
+  id:text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name:text('name'),
+  email:text('email').notNull().unique(),
+  password:text('password').notNull(),
+  emailVerified:timestamp('email_verified',{mode:'date'}),
+  image:text('image'),
+  role:roleEnums('role').notNull().default('user'),
+})
