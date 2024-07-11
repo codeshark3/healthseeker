@@ -11,6 +11,7 @@ import {
 import CustomFormField from "../CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { UserFormSchema } from "~/lib/zodSchema"
+import { createUser } from "~/server/patients"
  
 
 export enum FormFieldType { 
@@ -38,15 +39,15 @@ const PatientForm = () => {
   })
 
   // 2. Define a submit handler.
-  function onSubmit({name,email,phone}: z.infer<typeof UserFormSchema>) {
+  async function onSubmit({name,email,phone}: z.infer<typeof UserFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
 
     try {
-        // const userData= {name,email,phone}
-        // const user = await createUser(userData)
-        // if(user) router.push(`/patients/${user.id}/register`)
+        const userData= {name,email,phone}
+        const user = await createUser(userData)
+         if(user) router.push(`/patients/${user.id}/register`)
         
     } catch(error) {
       console.log(error)
