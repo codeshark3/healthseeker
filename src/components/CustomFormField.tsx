@@ -183,6 +183,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Input } from "~/components/ui/input";
 import { Control } from "react-hook-form";
+import { Checkbox } from "./ui/checkbox";
 import { FormFieldType } from "./forms/PatientForm";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -309,6 +310,22 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox
+              id={props.name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+            <label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </label>
+          </div>
+        </FormControl>
+      );
+
     //   case FormFieldType.TIME:
     //     return <Input type="time" />
     //     break;

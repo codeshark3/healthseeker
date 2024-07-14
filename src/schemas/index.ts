@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserFormSchema= z.object({
+export const UserFormSchema = z.object({
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")
@@ -44,7 +44,6 @@ export const RegisterSchema = z
     path: ["confirm_password"],
   });
 
-
 export const PatientFormValidation = z.object({
   name: z
     .string()
@@ -72,7 +71,7 @@ export const PatientFormValidation = z.object({
     .string()
     .refine(
       (emergencyContactNumber) => /^\+\d{10,15}$/.test(emergencyContactNumber),
-      "Invalid phone number"
+      "Invalid phone number",
     ),
   primaryPhysician: z.string().min(2, "Select at least one doctor"),
   insuranceProvider: z
@@ -89,7 +88,8 @@ export const PatientFormValidation = z.object({
   pastMedicalHistory: z.string().optional(),
   identificationType: z.string().optional(),
   identificationNumber: z.string().optional(),
-  identificationDocument: z.custom<File[]>().optional(),
+  // identificationDocument: z.custom<File[]>().optional(),
+  identificationDcumentUrl: z.string().optional(),
   treatmentConsent: z
     .boolean()
     .default(false)
